@@ -1,2 +1,2 @@
-import { Profile } from "@/components/auth/Account";
+import Profile from "@/components/account/Profile";
 export default function Page() { return <Profile />; }

@@ -1,3 +1,3 @@
-import AdminPage from "@/components/admin/AdminPage";
+import InventoryAdmin from "@/components/admin/InventoryAdmin";
 export const metadata = { title: "Inventory" };
-export default function Page() { return <AdminPage title="Inventory" note="Stock and SKU management arrives in the next phase." />; }
+export default function Page() { return <InventoryAdmin />; }

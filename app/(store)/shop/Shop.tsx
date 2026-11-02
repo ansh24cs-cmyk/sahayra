@@ -3,9 +3,10 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProducts } from "@/lib/api"; import type { Category, Paged, Product } from "@/lib/types";
-import ProductCard from "@/components/ProductCard"; import EmptyState from "@/components/EmptyState"; import { CATEGORIES } from "@/lib/categories";
+import ProductCard from "@/components/ProductCard"; import EmptyState from "@/components/EmptyState"; import { useCategories } from "@/components/useCategories";
 const PAGE = 12;
 export default function Shop() {
+  const CATEGORIES = useCategories();
   const sp = useSearchParams(); const router = useRouter();
   const [data, setData] = useState<Paged<Product> | null>(null); const [err, setErr] = useState(false);
   const q = sp.get("q") ?? ""; const category = (sp.get("category") ?? undefined) as Category | undefined; const sort = (sp.get("sort") ?? "new") as "new" | "low" | "high";

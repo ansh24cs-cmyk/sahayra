@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signOut, updateProfile,
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signOut, updateProfile,
   browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
 import { getClientAuth } from "@/lib/firebase/client";
 export class AuthNotConfiguredError extends Error { constructor() { super("Firebase is not configured."); } }
@@ -7,6 +7,7 @@ export function mapAuthError(e: unknown): string {
   if (e instanceof AuthNotConfiguredError) return "Sign-in isn't connected yet. See docs/AUTH_SETUP.md.";
   switch ((e as { code?: string })?.code) {
     case "auth/invalid-credential": case "auth/wrong-password": case "auth/user-not-found": return "The email or password is incorrect.";
+    case "auth/requires-recent-login": return "Please sign in again, then retry.";
     case "auth/user-disabled": return "This account has been disabled. Contact support.";
     case "auth/network-request-failed": return "Network problem. Check your connection and try again.";
     case "auth/too-many-requests": return "Too many attempts. Wait a few minutes and try again.";
@@ -41,3 +42,7 @@ export async function resendVerificationEmail(): Promise<"sent" | "wait"> {
 
 /** Re-reads the user from Firebase so a freshly verified email is picked up. */
 export async function refreshUser() { await auth().currentUser?.reload(); }
+
+export async function updateDisplayName(name: string) { const u = auth().currentUser; if (u) await updateProfile(u, { displayName: name }); }
+/** Re-authenticates with the current password first, as Firebase requires for sensitive changes. */
+export async function changePassword(current: string, next: string) { const u = auth().currentUser; if (!u?.email) throw new Error("Not signed in"); await reauthenticateWithCredential(u, EmailAuthProvider.credential(u.email, current)); await updatePassword(u, next); }

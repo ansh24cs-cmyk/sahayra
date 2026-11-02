@@ -1,0 +1,4 @@
+import { withAdmin, ser } from "@/lib/server/admin"; import { HttpError, readJson } from "@/lib/server/guard"; import { adminDb } from "@/lib/firebase/admin"; import { validateSettings } from "@/lib/admin/validation"; import { FieldValue } from "firebase-admin/firestore";
+const ref = () => adminDb().collection("settings").doc("store");
+export const GET = (req: Request) => withAdmin(req, false, async () => ({ settings: { storeName: "Sahayra", supportEmail: "", supportPhone: "", announcement: "", shippingFlatInr: 0, freeShippingAboveInr: null, ...ser((await ref().get()).data() ?? {}) } }));
+export const PUT = (req: Request) => withAdmin(req, true, async () => { const v = validateSettings(await readJson(req)); if (!v.ok) throw new HttpError(400, "validation", v.errors); await ref().set({ ...v.value, updatedAt: FieldValue.serverTimestamp() }, { merge: true }); });

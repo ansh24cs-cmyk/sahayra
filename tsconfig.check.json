@@ -1,0 +1,1 @@
+{"extends":"./tsconfig.json","compilerOptions":{"noEmit":true,"incremental":false,"plugins":[],"jsx":"preserve","types":[]},"include":["app","components","context","lib","stubs.check.d.ts"]}

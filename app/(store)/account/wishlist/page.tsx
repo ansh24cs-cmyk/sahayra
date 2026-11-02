@@ -1,2 +1,2 @@
-import { Wishlist } from "@/components/auth/Account";
+import Wishlist from "@/components/account/Wishlist";
 export default function Page() { return <Wishlist />; }

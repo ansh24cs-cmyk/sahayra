@@ -1,3 +1,3 @@
-import AdminPage from "@/components/admin/AdminPage";
+import SettingsAdmin from "@/components/admin/SettingsAdmin";
 export const metadata = { title: "Settings" };
-export default function Page() { return <AdminPage title="Settings" note="Store settings and audit history arrive in the next phase." />; }
+export default function Page() { return <SettingsAdmin />; }

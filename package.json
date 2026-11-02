@@ -6,10 +6,12 @@
   "build": "next build",
   "start": "next start",
   "test": "node --test \"tests/**/*.test.ts\"",
-  "check:boundaries": "node scripts/check-boundaries.mjs"
+  "check:boundaries": "node scripts/check-boundaries.mjs",
+  "test:rules": "firebase emulators:exec --only firestore --project sahayra-rules-test \"node --test tests/rules/rules.emulator.mjs\"",
+  "check:security": "node scripts/check-security.mjs"
  },
  "dependencies": {
-  "next": "14.2.15",
+  "next": "~14.2.25",
   "react": "18.3.1",
   "react-dom": "18.3.1",
   "firebase": "^11.0.0",
@@ -22,6 +24,8 @@
   "typescript": "5.5.4",
   "tailwindcss": "3.4.10",
   "postcss": "8.4.45",
-  "autoprefixer": "10.4.20"
+  "autoprefixer": "10.4.20",
+  "@firebase/rules-unit-testing": "^4.0.0",
+  "firebase-tools": "^13.0.0"
  }
 }

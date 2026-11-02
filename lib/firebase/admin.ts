@@ -1,3 +1,4 @@
+import "server-only";
 // SERVER ONLY. Import from route handlers and server actions, never from "use client" files.
 import { cert, getApp, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";

@@ -13,10 +13,10 @@ async function decode(req?: Request) {
     return c ? await auth.verifySessionCookie(c, true) : null;
   } catch { return null; }
 }
-export async function getAdminDecision(req?: Request): Promise<{ decision: AdminDecision; uid?: string }> {
+export async function getAdminDecision(req?: Request): Promise<{ decision: AdminDecision; uid?: string; actor?: string }> {
   const d = await decode(req);
   const decision = evaluateAdmin(d, process.env.ADMIN_UID, missingServerConfig().length === 0);
-  return { decision, uid: decision === "ok" ? d!.uid : undefined };
+  return { decision, uid: decision === "ok" ? d!.uid : undefined, actor: d?.uid };
 }
 /** For route handlers: `const g = await requireAdminApi(req); if (g instanceof Response) return g;` */
 export async function requireAdminApi(req: Request): Promise<{ uid: string } | Response> {
@@ -24,9 +24,9 @@ export async function requireAdminApi(req: Request): Promise<{ uid: string } | R
   return decision === "ok" ? { uid: uid! } : Response.json({ error: decision }, { status: decisionStatus(decision) });
 }
 /** Customer-owned resources: authenticated AND uid === resource owner. */
-export async function requireUserApi(req: Request, ownerUid?: string): Promise<{ uid: string } | Response> {
+export async function requireUserApi(req: Request, ownerUid?: string): Promise<{ uid: string; emailVerified: boolean } | Response> {
   const d = await decode(req);
   if (!d) return Response.json({ error: "unauthenticated" }, { status: 401 });
   if (ownerUid && d.uid !== ownerUid) return Response.json({ error: "forbidden" }, { status: 403 });
-  return { uid: d.uid };
+  return { uid: d.uid, emailVerified: d.email_verified === true };
 }

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link"; import { usePathname, useRouter } from "next/navigation";
 import { signOutUser } from "@/lib/auth/service";
-const items = [["/admin", "Dashboard"], ["/admin/products", "Products"], ["/admin/categories", "Categories"], ["/admin/inventory", "Inventory"], ["/admin/orders", "Orders"], ["/admin/customers", "Customers"], ["/admin/settings", "Settings"]];
+const items = [["/admin", "Dashboard"], ["/admin/products", "Products"], ["/admin/categories", "Categories"], ["/admin/inventory", "Inventory"], ["/admin/orders", "Orders"], ["/admin/coupons", "Coupons"], ["/admin/banners", "Banners"], ["/admin/customers", "Customers"], ["/admin/settings", "Settings"]];
 export default function AdminNav() {
   const p = usePathname(); const r = useRouter();
   return (<aside className="border-b border-champagne/60 p-5 md:min-h-screen md:w-56 md:border-b-0 md:border-r"><p className="mb-6 font-serif text-2xl text-gold">Sahayra admin</p>

@@ -1,0 +1,3 @@
+import { withUser, readJson, HttpError, assertId } from "@/lib/server/guard"; import { deleteAddress, updateAddress } from "@/lib/server/addresses"; import { validateAddress } from "@/lib/account/validation";
+export const PATCH = (req: Request, { params }: { params: { id: string } }) => withUser(req, true, async (uid) => { const v = validateAddress(await readJson(req)); if (!v.ok) throw new HttpError(400, "validation", v.errors); await updateAddress(uid, assertId(params.id), v.value); });
+export const DELETE = (req: Request, { params }: { params: { id: string } }) => withUser(req, true, async (uid) => { await deleteAddress(uid, assertId(params.id)); });

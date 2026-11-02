@@ -1,0 +1,5 @@
+import ResourceManager from "@/components/admin/ResourceManager";
+export const metadata = { title: "Banners" };
+export default function Page() { return <ResourceManager title="Homepage banners" endpoint="/api/admin/banners" intro="Published banners appear on the homepage (up to four, in order). Use an https image URL, or leave it empty for a text banner." emptyTitle="No banners yet" emptyBody="Add a banner to promote a collection or announcement."
+  defaults={{ published: false, order: 0, href: "/shop" }} fields={[{ key: "title", label: "Title" }, { key: "subtitle", label: "Subtitle (optional)" }, { key: "imageUrl", label: "Image URL (optional, https)" }, { key: "href", label: "Link path", hint: "A page on this site, like /shop." }, { key: "order", label: "Order", type: "number" }, { key: "published", label: "Published", type: "checkbox" }]}
+  columns={[{ key: "title", label: "Title" }, { key: "href", label: "Link" }, { key: "order", label: "Order" }, { key: "published", label: "Published", format: "bool" }]} />; }

@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import Logo from "@/components/Logo";
-import { CATEGORIES } from "@/lib/categories";
+import { useCategories } from "@/components/useCategories";
 export default function Header() {
+  const CATEGORIES = useCategories();
   const { count, setOpen } = useCart(); const router = useRouter(); const [menu, setMenu] = useState(false); const [q, setQ] = useState(""); const [find, setFind] = useState(false);
   const go = (e: React.FormEvent) => { e.preventDefault(); if (q.trim()) { router.push(`/shop?q=${encodeURIComponent(q.trim())}`); setFind(false); } };
   return (<header className="sticky top-0 z-40 bg-ivory/95 backdrop-blur-sm border-b border-champagne/50">
